@@ -1,4 +1,4 @@
-// Define our labelmap
+// Define labelmap
 const labelMap = {
   1: { name: "1", color: "red" },
   2: { name: "2", color: "yellow" },
@@ -29,7 +29,7 @@ export const drawRect = (
       ctx.fillStyle = "white";
       ctx.font = "30px Arial";
 
-      // DRAW!!
+      // DRAW
       ctx.beginPath();
       ctx.fillText(
         labelMap[text]["name"] + " - " + Math.round(scores[i] * 100) / 100,
