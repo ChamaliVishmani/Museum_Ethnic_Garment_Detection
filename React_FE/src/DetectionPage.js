@@ -1,21 +1,17 @@
-// Import dependencies
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as tf from "@tensorflow/tfjs";
 import Webcam from "react-webcam";
-
-import { nextFrame } from "@tensorflow/tfjs";
-// 2. TODO - Import drawing utility here
 import { drawRect } from "./utilities";
 
 function DetectionPage() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  // const navigate = useNavigate();
 
-  // Main function
+  const navigate = useNavigate();
+
   const runCoco = async () => {
-    // 3. TODO - Load network
+    // Load network
     const net = await tf.loadGraphModel(
       "https://musuemtfod.s3.us-south.cloud-object-storage.appdomain.cloud/model.json"
     );
@@ -46,7 +42,7 @@ function DetectionPage() {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-      // 4. TODO - Make Detections
+      // Make Detections
       const img = tf.browser.fromPixels(video);
       const resized = tf.image.resizeBilinear(img, [640, 480]);
       const casted = resized.cast("int32");
@@ -61,26 +57,35 @@ function DetectionPage() {
       const confidence = 0.9;
       if (scores[0][0] > confidence) {
         const objectNumber = classes[0][0];
-        console.log("object ", objectNumber, "score : ", scores[0][0]);
-        // navigate("/ObjectDescription", { objectNumber });
+        const score = scores[0][0];
+
+        navigate("/ObjectDescription", { state: { objectNumber, score } });
       }
 
-      // Draw mesh
-      const ctx = canvasRef.current.getContext("2d");
+      const canvas = canvasRef.current;
 
-      // 5. TODO - Update drawing utility
-      // drawSomething(obj, ctx)
-      requestAnimationFrame(() => {
-        drawRect(
-          boxes[0],
-          classes[0],
-          scores[0],
-          0.7, //confidence
-          videoWidth,
-          videoHeight,
-          ctx
-        );
-      });
+      if (canvas) {
+        // Draw mesh
+        const ctx = canvas.getContext("2d");
+
+        if (ctx) {
+          requestAnimationFrame(() => {
+            drawRect(
+              boxes[0],
+              classes[0],
+              scores[0],
+              0.7, //confidence
+              videoWidth,
+              videoHeight,
+              ctx
+            );
+          });
+        } else {
+          console.error("Canvas context not available");
+        }
+      } else {
+        console.error("Canvas element not available");
+      }
 
       tf.dispose(img);
       tf.dispose(resized);
