@@ -11,7 +11,7 @@ function DetectionPage() {
   const canvasRef = useRef(null);
   const navigate = useNavigate();
 
-  const [net, setNet] = useState(null);
+  const [, setNet] = useState(null);
 
   const detect = useCallback(
     async (net) => {
