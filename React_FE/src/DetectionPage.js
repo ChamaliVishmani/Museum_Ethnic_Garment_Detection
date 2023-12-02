@@ -42,7 +42,7 @@ function DetectionPage() {
         const obj = await net.executeAsync(expanded);
 
         const boxes = await obj[6].array();
-        const classes = await obj[1].array();
+        const classes = await obj[4].array();
         const scores = await obj[3].array();
 
         // Main label detected
