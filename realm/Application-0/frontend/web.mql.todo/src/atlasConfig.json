@@ -1,0 +1,9 @@
+{
+    "appId": "application-0-cinac",
+    "appUrl": "https://realm.mongodb.com/groups/6399d95e294a8a205e078ecc/apps/6592e567ccdd8e76b0682a32",
+    "baseUrl": "https://realm.mongodb.com",
+    "clientApiBaseUrl": "https://asia-south1.gcp.realm.mongodb.com",
+    "dataApiBaseUrl": "https://asia-south1.gcp.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/6399d95e294a8a205e078ecc/explorer/Cluster0/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}
